@@ -1,0 +1,56 @@
+---  
+# - name: Gather all registered virtual machines
+#   community.vmware.vmware_vm_info:
+#     hostname: "{{ vcenter_hostname }}"
+#     username: "{{ vcenter_username }}"
+#     password: "{{ vcenter_password }}"
+#     validate_certs: false
+#   delegate_to: localhost
+#   register: vminfo
+# 
+# - set_fact:
+#     vms: "{{ vms | default([]) + [item.guest_name] }}"
+#   loop: "{{ vminfo.virtual_machines }}"
+# 
+# - name: Fail if vm name matches with existing vm.
+#   fail:
+#     msg: Virtual Machine with name "{{ vm_name }}" already exists.
+#   when: vm_name is in vms
+
+- name: Clone the template
+  community.vmware.vmware_guest:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    validate_certs: false
+    name: "{{ vm_name }}"
+    template: "{{ template }}"
+    cluster: "{{ cluster }}"
+    datacenter: "{{ datacenter }}"
+    folder: "{{ folder }}" 
+    state: powered-on
+    hardware:
+      memory_mb: "{{ memory }}"
+      num_cpus: "{{ cpus }}"
+    networks:
+      - name: "{{ network_name }}"
+        start_connected: yes
+        # gateway: "{{ gateway }}"
+        # ip: "{{ ip_address }}"
+        # netmask: "{{ netmask }}"
+        # type: static
+    disk:
+      - datastore: "{{ datastore }}"
+        size_gb: "{{ disk_size }}"
+    # customization:
+    #   dns_servers: "{{ dns_servers }}"
+    #   domain: "{{ domain }}"
+    #   domainadmin: "{{ domainadmin }}"
+    #   domainadminpassword: "{{ domainadminpassword }}"
+    #   existing_vm: no
+    #   fullname: "{{ fullname }}"
+    #   hostname: "{{ hostname }}"
+    #   joindomain: "{{ joindomain }}"
+    #   password: "{{ password }}"
+    wait_for_ip_address: no
+  delegate_to: localhost

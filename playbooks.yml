@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  vars_files:
+    - ./creds.yml
+  vars:
+    vcenter_username: SRV0485@services.gws.sa
+  roles:
+    - vmware

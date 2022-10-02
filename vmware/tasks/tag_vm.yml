@@ -1,0 +1,12 @@
+- name: "{{ state | capitalize }} tags on virtual machine"
+  community.vmware.vmware_tag_manager:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    validate_certs: false
+    tag_names: "{{ vm_tags.split('\n') }}"
+    object_name: "{{ item }}"
+    object_type: VirtualMachine
+    state: "{{ state }}"
+  delegate_to: localhost
+  loop: "{{ vm_names.split('\n') }}"
