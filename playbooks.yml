@@ -1,8 +1,10 @@
 ---
 - hosts: localhost
-  vars_files:
-    - ./creds.yml
+#   vars_files:
+#     - ./creds.yml
   vars:
-    vcenter_username: SRV0485@services.gws.sa
+    vcenter_hostname: 10.82.11.10
+    vcenter_username: administrator@ivlab.cloud
+    vcenter_password: letmein2iVolve@
   roles:
     - vmware
