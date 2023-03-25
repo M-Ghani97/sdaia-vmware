@@ -6,5 +6,7 @@
     vcenter_hostname: 10.82.11.10
     vcenter_username: administrator@ivlab.cloud
     vcenter_password: 727Pn#H1Ufwb
-  roles:
-    - vmware
+#   roles:
+#     - vmware
+  tasks:
+    - shell: aws --version 
