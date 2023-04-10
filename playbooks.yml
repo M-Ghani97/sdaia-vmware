@@ -9,4 +9,9 @@
 #   roles:
 #     - vmware
   tasks:
-    - shell: aws --version 
+    - debug:
+        msg: |
+          client: {{ client_id }}
+          secret: {{ secret }}
+          subscription_id: {{ subscription_id }}
+          tenant: {{ tenant }}
